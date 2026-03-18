@@ -433,8 +433,8 @@ section { padding: 88px 0; }
 
   /* NAV — menu hamburger simplifié */
   .nav-inner { height: 56px; padding: 0 16px; }
-  .nav-links { display: none; } /* caché sur mobile, remplacé par le menu burger */
-  .dark-toggle { display: none; }
+  .nav-links { display: none; }
+  .dark-toggle { padding: 4px 8px; font-size: .75rem; }
   .nav-logo { font-size: 1rem; }
 
   /* HERO */
@@ -447,11 +447,14 @@ section { padding: 88px 0; }
   .hero-cta .btn { width: 100%; justify-content: center; }
 
   /* RAISONS TEASER */
-  .raisons-inner { flex-direction: column; gap: 12px; padding: 16px; }
-  .raisons-track { min-width: 0; width: 100%; }
-  .raison-item { justify-content: flex-start; }
-  .raisons-label { font-size: .65rem; }
-  .raisons-scroll { font-size: .65rem; }
+  .raisons-inner { flex-direction: column; gap: 10px; padding: 16px; }
+  .raisons-track { min-width: 0; width: 100%; height: 36px; }
+  .raison-item { justify-content: center; }
+  .raison-num { font-size: 1.1rem; }
+  .raison-title { font-size: .85rem; }
+  .raisons-label { font-size: .62rem; text-align: center; }
+  .raisons-scroll { font-size: .62rem; }
+  .raisons-dots { justify-content: center; }
 
   /* COMPTEURS */
   .counters { flex-direction: column; }

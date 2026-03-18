@@ -683,3 +683,76 @@ section { padding: 88px 0; }
   .lex-bubble { width: 220px; left: 0; transform: none; }
   .lex-bubble::after { left: 20px; transform: none; }
 }
+
+/* ── TICKER FINANCIER GAUCHE ─────────────────────────────── */
+.ticker-wrap {
+  position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+  z-index: 90; writing-mode: vertical-rl; text-orientation: mixed;
+  height: 320px; overflow: hidden;
+  display: flex; align-items: center;
+  padding: 0 8px;
+}
+.ticker-track {
+  display: flex; flex-direction: column; gap: 0;
+  animation: tickerScroll 18s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+.ticker-item {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px; padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ticker-item:last-child { border-bottom: none; }
+.ticker-label {
+  font-size: .6rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--ink-soft);
+}
+.ticker-value {
+  font-size: .65rem; font-weight: 500;
+}
+.ticker-value.up { color: var(--accent); }
+.ticker-value.down { color: #e05a5a; }
+@keyframes tickerScroll {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+/* ── NAVIGATION DOTS DROITE ──────────────────────────────── */
+.nav-dots-wrap {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  z-index: 90; display: flex; flex-direction: column; gap: 20px;
+  align-items: flex-end;
+}
+.nav-dot-item {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; text-decoration: none;
+  transition: opacity .2s;
+}
+.nav-dot-item:hover { opacity: 1; }
+.nav-dot-item:hover .nav-dot-label { opacity: 1; transform: translateX(0); }
+.nav-dot-circle {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--ink-soft);
+  background: transparent; flex-shrink: 0;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.nav-dot-item.active .nav-dot-circle {
+  background: var(--accent); border-color: var(--accent);
+  transform: scale(1.4);
+}
+.nav-dot-label {
+  font-size: .65rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--ink-soft);
+  opacity: 0; transform: translateX(8px);
+  transition: opacity .2s, transform .2s;
+  white-space: nowrap;
+}
+.nav-dot-item.active .nav-dot-label {
+  opacity: 1; transform: translateX(0); color: var(--accent);
+}
+
+/* Masquer sur mobile */
+@media (max-width: 1100px) {
+  .ticker-wrap { display: none; }
+  .nav-dots-wrap { display: none; }
+}

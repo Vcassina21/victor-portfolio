@@ -185,6 +185,72 @@ function ProjetCard({ projet }) {
   )
 }
 
+// ── Ticker financier ─────────────────────────────────────
+const TICKER_ITEMS = [
+  { label: 'BTC', value: '+2.4%', up: true },
+  { label: 'ETH', value: '+1.1%', up: true },
+  { label: 'CAC 40', value: '+0.8%', up: true },
+  { label: 'Nickel', value: '★', up: true },
+  { label: 'SOL', value: '-0.6%', up: false },
+  { label: 'Web3', value: '▲', up: true },
+  { label: 'DeFi', value: '+3.2%', up: true },
+  { label: 'Fintech', value: '★', up: true },
+  { label: 'NASDAQ', value: '+1.5%', up: true },
+  { label: 'EUR/USD', value: '+0.2%', up: true },
+]
+
+function Ticker() {
+  return (
+    <div className="ticker-wrap">
+      <div className="ticker-track">
+        {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+          <div key={i} className="ticker-item">
+            <span className="ticker-label">{item.label}</span>
+            <span className={`ticker-value ${item.up ? 'up' : 'down'}`}>{item.value}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Navigation dots ───────────────────────────────────────
+const NAV_SECTIONS = [
+  { id: 'bio', label: 'Bio' },
+  { id: 'competences', label: 'Compétences' },
+  { id: 'projets', label: 'Projets' },
+  { id: 'experience', label: 'Expériences' },
+  { id: 'contact', label: 'Contact' },
+]
+
+function NavDots() {
+  const [active, setActive] = useState('bio')
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) setActive(e.target.id)
+      })
+    }, { threshold: 0.4 })
+    NAV_SECTIONS.forEach(s => {
+      const el = document.getElementById(s.id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div className="nav-dots-wrap">
+      {NAV_SECTIONS.map(s => (
+        <a key={s.id} href={`#${s.id}`} className={`nav-dot-item${active === s.id ? ' active' : ''}`}>
+          <span className="nav-dot-circle" />
+          <span className="nav-dot-label">{s.label}</span>
+        </a>
+      ))}
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -261,6 +327,12 @@ export default function Home() {
           ↑
         </button>
       )}
+
+      {/* TICKER GAUCHE */}
+      <Ticker />
+
+      {/* NAVIGATION DOTS DROITE */}
+      <NavDots />
 
       {/* NAV */}
       <nav className="nav">

@@ -685,25 +685,14 @@ section { padding: 88px 0; }
 }
 
 
-/* ── INDICATEUR DE SECTION VERTICAL ─────────────────────── */
-.section-indicator {
-  position: fixed; left: 32px; top: 50%;
-  transform: translateY(-50%);
-  z-index: 90; display: flex; flex-direction: column;
-  align-items: center; gap: 16px;
+
+/* ── FOND TEXTURÉ SUBTIL ─────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #1A1A1A 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: .028;
 }
-.section-indicator-text {
-  writing-mode: vertical-rl; text-orientation: mixed;
-  font-size: .65rem; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--accent);
-  opacity: .7; transition: opacity .4s var(--ease), color .4s var(--ease);
-  font-family: var(--sans);
-}
-.section-indicator-line {
-  width: 1px; height: 60px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  opacity: .4;
-}
-@media (max-width: 1200px) {
-  .section-indicator { display: none; }
-}
+[data-theme="dark"] body::before { opacity: .045; }

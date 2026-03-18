@@ -185,6 +185,42 @@ function ProjetCard({ projet }) {
   )
 }
 
+// ── Indicateur de section vertical ───────────────────────
+const SECTIONS_LABELS = [
+  { id: 'bio', label: 'BIO' },
+  { id: 'competences', label: 'COMPÉTENCES' },
+  { id: 'projets', label: 'PROJETS' },
+  { id: 'experience', label: 'EXPÉRIENCES' },
+  { id: 'contact', label: 'CONTACT' },
+]
+
+function SectionIndicator() {
+  const [current, setCurrent] = useState('BIO')
+
+  useEffect(() => {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const found = SECTIONS_LABELS.find(s => s.id === e.target.id)
+          if (found) setCurrent(found.label)
+        }
+      })
+    }, { threshold: 0.4 })
+    SECTIONS_LABELS.forEach(s => {
+      const el = document.getElementById(s.id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [])
+
+  return (
+    <div className="section-indicator">
+      <span className="section-indicator-text">{current}</span>
+      <span className="section-indicator-line" />
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -251,6 +287,9 @@ export default function Home() {
 
       {/* BARRE DE PROGRESSION */}
       <div className="read-progress" style={{ width: `${progress}%` }} />
+
+      {/* INDICATEUR DE SECTION */}
+      <SectionIndicator />
 
       {/* TOAST */}
       <div className={`toast${toast ? ' toast-visible' : ''}`}>✅ &nbsp;Email copié dans le presse-papier !</div>

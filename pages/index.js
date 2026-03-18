@@ -321,7 +321,7 @@ export default function Home() {
             </div>
             <div className="hero-photo-wrap">
               <div className="photo-glow" />
-              <Image src="/victor.png" alt="Victor Cassina" width={240} height={300} className="hero-photo" priority />
+              <img src="/victor2.png" alt="Victor Cassina" className="hero-photo" />
             </div>
           </div>
         </div>

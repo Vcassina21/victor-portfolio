@@ -203,7 +203,8 @@ section { padding: 88px 0; }
   color: var(--ink); max-width: 500px;
   animation: fadeUp .7s var(--ease) .5s both;
 }
-.hero-cta { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; animation: fadeUp .7s var(--ease) .65s both; }
+.hero-cta { margin-top: 40px; display: flex; flex-direction: column; gap: 10px; animation: fadeUp .7s var(--ease) .65s both; }
+.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Photo */
 .hero-photo-wrap { position: relative; display: flex; justify-content: center; animation: fadeUp .8s var(--ease) .3s both; }
@@ -451,7 +452,9 @@ section { padding: 88px 0; }
   .hero-available { font-size: .7rem; padding: 5px 12px; }
   .hero-eyebrow { font-size: .68rem; }
   .hero-cta { flex-direction: column; gap: 8px; }
-  .hero-cta .btn { width: 100%; justify-content: center; }
+  .hero-cta-row { flex-direction: column; gap: 8px; }
+  .hero-cta-row .btn { width: 100%; justify-content: center; }
+  .hero-cta .btn-cv { width: 100%; justify-content: center; text-align: center; }
 
   /* RAISONS TEASER */
   .raisons-teaser { margin: 32px auto 0; }
@@ -625,13 +628,49 @@ section { padding: 88px 0; }
 
 /* ── OUTILS INFORMATIQUES ───────────────────────────────── */
 .outils-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.outil-pill-wrap {
+  position: relative; display: inline-block;
+}
 .outil-pill {
   font-size: .78rem; font-weight: 500; padding: 6px 14px;
   border-radius: 50px; border: 1.5px solid var(--border);
   color: var(--ink); background: var(--bg);
-  transition: border-color .2s, color .2s;
+  transition: border-color .2s, color .2s, background .2s;
+  cursor: default; display: inline-block;
 }
-.outil-pill:hover { border-color: var(--accent); color: var(--accent); }
+.outil-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.outil-pill-wrap:hover .outil-tooltip { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+/* Tooltip */
+.outil-tooltip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: var(--ink); color: var(--bg);
+  font-size: .75rem; line-height: 1.5;
+  padding: 10px 14px; border-radius: 10px;
+  width: 240px; z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: opacity .2s, transform .2s;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+.outil-tooltip::after {
+  content: ''; position: absolute; top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--ink);
+}
+
+/* Pulse animations — chaque pill s'éclaire à son tour */
+@keyframes pillGlow {
+  0%, 100% { border-color: var(--border); color: var(--ink); background: var(--bg); }
+  50% { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+}
+.outil-pulse-0 { animation: pillGlow 6s ease-in-out 0s infinite; }
+.outil-pulse-1 { animation: pillGlow 6s ease-in-out 1s infinite; }
+.outil-pulse-2 { animation: pillGlow 6s ease-in-out 2s infinite; }
+.outil-pulse-3 { animation: pillGlow 6s ease-in-out 3s infinite; }
+.outil-pulse-4 { animation: pillGlow 6s ease-in-out 4s infinite; }
+.outil-pulse-5 { animation: pillGlow 6s ease-in-out 5s infinite; }
 
 @media (max-width: 680px) {
   .raisons-inner { gap: 14px; padding: 18px 20px; }
@@ -847,12 +886,13 @@ body::before {
   position: fixed; inset: 0; z-index: 200;
   background: rgba(0,0,0,.6); display: flex;
   align-items: center; justify-content: center;
-  padding: 20px;
+  padding: 16px;
 }
 .terminal-box {
   width: 100%; max-width: 620px; background: #0d0d0d;
   border: 1px solid #00D084; border-radius: 12px;
   overflow: hidden; box-shadow: 0 0 40px #00D08430;
+  font-size: 14px;
 }
 .terminal-bar {
   display: flex; align-items: center; gap: 8px;
@@ -952,7 +992,11 @@ body::before {
   .be-hide-sm { display: none; }
   .audit-panels { grid-template-columns: 1fr; }
   .audit-arrow { text-align: center; transform: rotate(90deg); }
-  .terminal-box { max-width: 100%; }
+  .terminal-box { max-width: 100%; font-size: 12px; }
+  .terminal-body { min-height: 150px; max-height: 220px; padding: 12px; }
+  .terminal-line { font-size: .72rem; }
+  .terminal-input { font-size: .78rem; }
+  .terminal-btn { font-size: .72rem; padding: 6px 10px; }
 }
 
 /* ── DASHBOARD ANALYTICS ─────────────────────────────────── */

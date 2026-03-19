@@ -470,7 +470,7 @@ function DashboardAnalytics() {
           <span className="dash-chart-title">Engagement par mois</span>
           <div className="dash-legend">
             <span className="dash-legend-item"><span className="dash-dot dash-dot-before" />Sans stratégie</span>
-            <span className="dash-legend-item"><span className="dash-dot dash-dot-after" />Avec stratégie Victor</span>
+            <span className="dash-legend-item"><span className="dash-dot dash-dot-after" />Avec ma stratégie</span>
           </div>
         </div>
         <div className="dash-chart">
@@ -494,6 +494,11 @@ function DashboardAnalytics() {
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
+
+  // Scroll tout en haut au chargement
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   // Mode sombre
   const [dark, setDark] = useState(false)
@@ -631,8 +636,10 @@ export default function Home() {
                 &ldquo;{HERO.citation}&rdquo;
               </blockquote>
               <div className="hero-cta">
-                <a href="#competences" className="btn btn-primary">Voir mes compétences</a>
-                <a href="#contact" className="btn btn-outline">Me contacter</a>
+                <div className="hero-cta-row">
+                  <a href="#competences" className="btn btn-primary">Voir mes compétences</a>
+                  <a href="#contact" className="btn btn-outline">Me contacter</a>
+                </div>
                 <a href="/cv-victor-cassina.pdf" download className="btn btn-cv">⬇ CV PDF</a>
               </div>
             </div>
@@ -706,8 +713,18 @@ export default function Home() {
 
               <p className="softskills-sub" style={{ marginTop: '32px' }}>Outils</p>
               <div className="outils-list">
-                {['Canva', 'CapCut', 'Suite Adobe', 'Claude AI', 'Notion', 'Meta Business Suite'].map(o => (
-                  <span key={o} className="outil-pill">{o}</span>
+                {[
+                  { nom: 'Canva', tip: 'Création de 40+ visuels pour la JPO MMI — affiches, carrousels Instagram, stories — validés par la cheffe de département.' },
+                  { nom: 'CapCut', tip: '3 vidéos montées pour la JPO MMI : interviews étudiants, visite des locaux, reportage BDE. Rendu pro en 48h.' },
+                  { nom: 'Suite Adobe', tip: 'Charte graphique Solidélice réalisée sous Illustrator — logo, palette, typographies, déclinée sur tous les supports.' },
+                  { nom: 'Claude AI', tip: 'Utilisé quotidiennement pour accélérer la rédaction, structurer des stratégies de contenu et affiner les angles éditoriaux.' },
+                  { nom: 'Notion', tip: 'Planning éditorial mensuel, suivi de projets SAÉ et organisation de la stratégie de contenu Hop Bunny sur Notion.' },
+                  { nom: 'Meta Business Suite', tip: 'Gestion des publications, analyse des insights et suivi des KPIs sur les pages Instagram et Facebook de Hop Bunny.' },
+                ].map((o, i) => (
+                  <div key={o.nom} className={`outil-pill-wrap`}>
+                    <span className={`outil-pill outil-pulse-${i}`}>{o.nom}</span>
+                    <div className="outil-tooltip">{o.tip}</div>
+                  </div>
                 ))}
               </div>
             </div>

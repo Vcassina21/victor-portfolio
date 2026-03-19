@@ -203,8 +203,7 @@ section { padding: 88px 0; }
   color: var(--ink); max-width: 500px;
   animation: fadeUp .7s var(--ease) .5s both;
 }
-.hero-cta { margin-top: 40px; display: flex; flex-direction: column; gap: 10px; animation: fadeUp .7s var(--ease) .65s both; }
-.hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-cta { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; animation: fadeUp .7s var(--ease) .65s both; }
 
 /* Photo */
 .hero-photo-wrap { position: relative; display: flex; justify-content: center; animation: fadeUp .8s var(--ease) .3s both; }
@@ -445,16 +444,14 @@ section { padding: 88px 0; }
   .hero-inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-photo-wrap { order: -1; }
   .hero-photo { width: 120px; height: 150px; }
-  .hero-name { font-size: 2.6rem; }
-  .hero-title { font-size: .88rem; min-height: 4em; }
-  .hero-tagline { font-size: .95rem; padding: 14px 16px; }
-  .hero-tagline::before { font-size: 2.5rem; }
-  .hero-available { font-size: .7rem; padding: 5px 12px; }
-  .hero-eyebrow { font-size: .68rem; }
+  .hero-name { font-size: 2.4rem; }
+  .hero-title { font-size: .85rem; min-height: 4em; }
+  .hero-tagline { font-size: .9rem; padding: 12px 14px; }
+  .hero-tagline::before { font-size: 2rem; }
+  .hero-available { font-size: .68rem; padding: 5px 10px; }
+  .hero-eyebrow { font-size: .65rem; }
   .hero-cta { flex-direction: column; gap: 8px; }
-  .hero-cta-row { flex-direction: column; gap: 8px; }
-  .hero-cta-row .btn { width: 100%; justify-content: center; }
-  .hero-cta .btn-cv { width: 100%; justify-content: center; text-align: center; }
+  .hero-cta .btn { width: 100%; justify-content: center; text-align: center; }
 
   /* RAISONS TEASER */
   .raisons-teaser { margin: 32px auto 0; }
@@ -477,18 +474,19 @@ section { padding: 88px 0; }
 
   /* SECTIONS */
   .section { padding: 48px 0; }
-  .section-heading { font-size: 1.7rem; }
+  .section-heading { font-size: 1.6rem; }
   .section-label { font-size: .65rem; }
   .container { padding: 0 16px; }
-  .skills-hint { font-size: .82rem; }
+  .skills-hint { font-size: .8rem; }
 
-  /* SOFT SKILLS */
+  /* SOFT SKILLS & OUTILS */
   .softskills-grid { grid-template-columns: 1fr; }
   .lang-block { border-right: none; border-bottom: 1px solid var(--border); }
   .soft-label { font-size: .85rem; }
   .soft-desc { font-size: .78rem; }
   .outils-list { gap: 6px; }
-  .outil-pill { font-size: .72rem; padding: 5px 10px; }
+  .outil-pill { font-size: .7rem; padding: 5px 10px; }
+  .outil-tooltip { display: none; } /* Masqué sur mobile — pas de hover */
 
   /* COMPÉTENCES */
   .skills-grid { grid-template-columns: 1fr; }
@@ -498,35 +496,62 @@ section { padding: 88px 0; }
   .skill-detail { font-size: .78rem; }
   .iut-pill { font-size: .7rem; padding: 3px 10px; }
 
-  /* TIMELINE */
-  .timeline-item { grid-template-columns: 72px 18px 1fr; gap: 0 8px; }
-  .timeline-annee { font-size: .72rem; }
-  .timeline-titre { font-size: .95rem; }
-  .timeline-desc { font-size: .82rem; }
-  .exp-tag { font-size: .62rem; }
+  /* BLOCK EXPLORER */
+  .be-header { grid-template-columns: 44px 1fr 90px; font-size: .58rem; padding: 8px 12px; }
+  .be-row { grid-template-columns: 44px 1fr 90px; padding: 12px; }
+  .be-num { font-size: .72rem; }
+  .be-titre { font-size: .82rem; }
+  .be-hash { font-size: .62rem; }
+  .be-status { font-size: .65rem; }
+  .be-modal { padding: 14px; }
+  .be-field { min-width: 80px; font-size: .6rem; }
+  .be-value { font-size: .78rem; }
 
   /* PROJETS */
   .projets-grid { grid-template-columns: 1fr; }
-  .projet-titre { font-size: 1.05rem; }
+  .projet-titre { font-size: 1rem; }
   .projet-resume { font-size: .82rem; }
-  .projet-toggle { font-size: .72rem; padding: 5px 12px; }
-  .projet-img-wrap { height: 160px; }
+  .projet-toggle { font-size: .7rem; padding: 5px 12px; }
+  .projet-img-wrap { height: 150px; }
 
   /* CITATION */
   .citation-band { padding: 40px 0; }
-  .citation-text { font-size: .95rem; padding: 0 8px; }
+  .citation-text { font-size: .92rem; padding: 0 8px; }
   .citation-author { font-size: .7rem; }
 
+  /* AUDIT PLAYGROUND */
+  .audit-wrap { padding: 20px 16px; }
+  .audit-panels { grid-template-columns: 1fr; }
+  .audit-arrow { text-align: center; transform: rotate(90deg); }
+  .audit-title { font-size: 1rem; }
+
+  /* DASHBOARD */
+  .dash-kpis { grid-template-columns: 1fr; }
+  .dash-kpi { padding: 16px; }
+  .dash-kpi-val { font-size: 1.8rem; }
+  .dash-chart { gap: 4px; height: 120px; }
+  .dash-chart-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .dash-bar-label { font-size: .55rem; }
+
   /* CONTACT */
-  .contact-section { padding: 56px 0 72px; }
+  .contact-section { padding: 48px 0 64px; }
   .contact-links { flex-direction: column; align-items: center; }
   .contact-links .btn { width: 100%; max-width: 320px; justify-content: center; }
+
+  /* TERMINAL */
+  .terminal-btn { font-size: .72rem; padding: 6px 10px; bottom: 16px; left: 16px; }
+  .terminal-overlay { padding: 12px; align-items: flex-end; padding-bottom: 60px; }
+  .terminal-box { max-width: 100%; font-size: 12px; border-radius: 10px; }
+  .terminal-body { min-height: 130px; max-height: 180px; padding: 10px; }
+  .terminal-line { font-size: .7rem; }
+  .terminal-input { font-size: .75rem; }
+  .terminal-input-row { padding: 10px 12px; }
 
   /* RETOUR EN HAUT */
   .back-to-top { bottom: 16px; right: 16px; width: 36px; height: 36px; font-size: .9rem; }
 
   /* TOAST */
-  .toast { font-size: .78rem; padding: 10px 18px; width: 90%; text-align: center; }
+  .toast { font-size: .78rem; padding: 10px 16px; width: 92%; text-align: center; }
 }
 
 /* NAV MOBILE — burger menu */
@@ -639,19 +664,20 @@ section { padding: 88px 0; }
   cursor: default; display: inline-block;
 }
 .outil-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-.outil-pill-wrap:hover .outil-tooltip { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.outil-pill-wrap:hover .outil-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
-/* Tooltip */
+/* Tooltip — part du centre de la pill */
 .outil-tooltip {
-  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  position: absolute; bottom: calc(100% + 12px); left: 50%;
   transform: translateX(-50%) translateY(6px);
   background: var(--ink); color: var(--bg);
   font-size: .75rem; line-height: 1.5;
   padding: 10px 14px; border-radius: 10px;
-  width: 240px; z-index: 100;
+  width: 220px; z-index: 200;
   opacity: 0; pointer-events: none;
   transition: opacity .2s, transform .2s;
-  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+  white-space: normal; text-align: left;
 }
 .outil-tooltip::after {
   content: ''; position: absolute; top: 100%; left: 50%;
@@ -660,17 +686,17 @@ section { padding: 88px 0; }
   border-top-color: var(--ink);
 }
 
-/* Pulse animations — chaque pill s'éclaire à son tour */
+/* Pulse animations */
 @keyframes pillGlow {
-  0%, 100% { border-color: var(--border); color: var(--ink); background: var(--bg); }
-  50% { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+  0%, 85%, 100% { border-color: var(--border); color: var(--ink); background: var(--bg); }
+  90%, 95% { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
 }
-.outil-pulse-0 { animation: pillGlow 6s ease-in-out 0s infinite; }
-.outil-pulse-1 { animation: pillGlow 6s ease-in-out 1s infinite; }
-.outil-pulse-2 { animation: pillGlow 6s ease-in-out 2s infinite; }
-.outil-pulse-3 { animation: pillGlow 6s ease-in-out 3s infinite; }
-.outil-pulse-4 { animation: pillGlow 6s ease-in-out 4s infinite; }
-.outil-pulse-5 { animation: pillGlow 6s ease-in-out 5s infinite; }
+.outil-pulse-0 { animation: pillGlow 9s ease-in-out 0s infinite; }
+.outil-pulse-1 { animation: pillGlow 9s ease-in-out 1.5s infinite; }
+.outil-pulse-2 { animation: pillGlow 9s ease-in-out 3s infinite; }
+.outil-pulse-3 { animation: pillGlow 9s ease-in-out 4.5s infinite; }
+.outil-pulse-4 { animation: pillGlow 9s ease-in-out 6s infinite; }
+.outil-pulse-5 { animation: pillGlow 9s ease-in-out 7.5s infinite; }
 
 @media (max-width: 680px) {
   .raisons-inner { gap: 14px; padding: 18px 20px; }

@@ -782,10 +782,10 @@ body::before {
   display: grid; grid-template-columns: 56px 1fr 140px 110px;
   align-items: center; padding: 16px 20px;
   border-bottom: 1px solid var(--border); cursor: pointer;
-  transition: background .2s; position: relative;
+  transition: background .2s;
 }
-.be-row:last-child { border-bottom: none; }
 .be-row:hover { background: var(--accent-dim); }
+.be-row-open { background: var(--accent-dim); border-bottom: none; }
 .be-num {
   font-family: var(--mono, monospace); font-size: .8rem;
   font-weight: 700; color: var(--accent);
@@ -793,7 +793,7 @@ body::before {
 .be-main { display: flex; flex-direction: column; gap: 3px; }
 .be-hash {
   font-family: var(--mono, monospace); font-size: .72rem;
-  color: var(--accent); opacity: .7;
+  color: var(--ink-soft); opacity: .6;
 }
 .be-titre { font-size: .9rem; font-weight: 500; color: var(--ink); }
 .be-period { font-size: .78rem; color: var(--ink-soft); }
@@ -804,21 +804,20 @@ body::before {
 
 /* Modal */
 .be-modal {
-  position: relative; left: 0; right: 0; top: 0;
-  z-index: 50; padding: 20px;
+  padding: 20px 24px 24px;
   background: var(--card-bg);
+  border-top: 1px solid var(--border);
   border-bottom: 2px solid var(--accent);
-  border-top: 2px solid var(--accent);
-  grid-column: 1 / -1;
   animation: fadeUp .2s var(--ease);
-  margin: 0;
 }
-.be-modal-inner { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; }
+.be-modal-inner { display: flex; flex-direction: column; gap: 10px; position: relative; }
 .be-close {
-  position: absolute; top: 12px; right: 20px;
-  background: none; border: none; cursor: pointer;
-  color: var(--ink-soft); font-size: 1rem;
+  position: absolute; top: 0; right: 0;
+  background: none; border: 1px solid var(--border); cursor: pointer;
+  color: var(--ink-soft); font-size: .72rem; padding: 4px 10px;
+  border-radius: 6px; transition: border-color .2s, color .2s;
 }
+.be-close:hover { border-color: var(--accent); color: var(--accent); }
 .be-modal-row {
   display: flex; gap: 16px; align-items: flex-start;
   font-size: .82rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;
@@ -827,17 +826,17 @@ body::before {
 .be-field {
   min-width: 100px; font-size: .68rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: .08em;
-  color: var(--ink-soft); padding-top: 2px;
+  color: var(--ink-soft); padding-top: 2px; flex-shrink: 0;
 }
 .be-value { color: var(--ink); line-height: 1.5; }
-.be-mono { font-family: var(--mono, monospace); font-size: .75rem; color: var(--accent); }
-.be-desc { color: var(--ink-soft); font-size: .82rem; line-height: 1.6; }
-.be-highlight-val { color: var(--accent); font-weight: 500; }
+.be-mono { font-family: var(--mono, monospace); font-size: .75rem; color: var(--ink-soft); }
+.be-desc { color: var(--ink-soft); font-size: .82rem; line-height: 1.6; margin: 0; }
+.be-highlight-val { color: var(--accent); font-weight: 500; margin: 0; }
 .be-hide-sm { }
 
 /* ── TERMINAL ────────────────────────────────────────────── */
 .terminal-btn {
-  position: fixed; bottom: 72px; right: 20px; z-index: 90;
+  position: fixed; bottom: 20px; left: 20px; z-index: 90;
   background: #0f0f0f; color: #00D084; border: 1px solid #00D084;
   border-radius: 8px; padding: 8px 14px; font-family: monospace;
   font-size: .82rem; cursor: pointer; font-weight: 700;

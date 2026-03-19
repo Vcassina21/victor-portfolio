@@ -406,6 +406,91 @@ function AuditPlayground() {
   )
 }
 
+// ── Dashboard Analytics ───────────────────────────────────
+function useDashboardAnim(target, duration = 1200) {
+  const [val, setVal] = useState(0)
+  const ref = useRef(null)
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      io.disconnect()
+      const start = performance.now()
+      const tick = (now) => {
+        const p = Math.min((now - start) / duration, 1)
+        setVal(Math.round(p * target))
+        if (p < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    }, { threshold: 0.3 })
+    if (ref.current) io.observe(ref.current)
+    return () => io.disconnect()
+  }, [target, duration])
+  return [val, ref]
+}
+
+const CHART_DATA = [
+  { label: 'Jan', before: 12, after: 28 },
+  { label: 'Fév', before: 15, after: 35 },
+  { label: 'Mar', before: 10, after: 42 },
+  { label: 'Avr', before: 18, after: 51 },
+  { label: 'Mai', before: 14, after: 47 },
+  { label: 'Jun', before: 20, after: 63 },
+]
+
+function DashboardAnalytics() {
+  const [engage, engageRef] = useDashboardAnim(63)
+  const [reach, reachRef] = useDashboardAnim(12400)
+  const [growth, growthRef] = useDashboardAnim(247)
+  const maxVal = Math.max(...CHART_DATA.map(d => d.after))
+
+  return (
+    <div className="dash-wrap reveal">
+      {/* KPI Cards */}
+      <div className="dash-kpis">
+        <div className="dash-kpi" ref={engageRef}>
+          <span className="dash-kpi-label">Taux d'engagement</span>
+          <span className="dash-kpi-val">{engage}<span className="dash-kpi-unit">%</span></span>
+          <span className="dash-kpi-sub">↑ +34% vs moyenne secteur</span>
+        </div>
+        <div className="dash-kpi" ref={reachRef}>
+          <span className="dash-kpi-label">Portée mensuelle</span>
+          <span className="dash-kpi-val">{reach.toLocaleString('fr')}<span className="dash-kpi-unit"> vues</span></span>
+          <span className="dash-kpi-sub">↑ Croissance organique</span>
+        </div>
+        <div className="dash-kpi" ref={growthRef}>
+          <span className="dash-kpi-label">Croissance communauté</span>
+          <span className="dash-kpi-val">+{growth}<span className="dash-kpi-unit">%</span></span>
+          <span className="dash-kpi-sub">↑ Sur 6 mois glissants</span>
+        </div>
+      </div>
+
+      {/* Chart */}
+      <div className="dash-chart-wrap">
+        <div className="dash-chart-header">
+          <span className="dash-chart-title">Engagement par mois</span>
+          <div className="dash-legend">
+            <span className="dash-legend-item"><span className="dash-dot dash-dot-before" />Sans stratégie</span>
+            <span className="dash-legend-item"><span className="dash-dot dash-dot-after" />Avec stratégie Victor</span>
+          </div>
+        </div>
+        <div className="dash-chart">
+          {CHART_DATA.map((d, i) => (
+            <div key={i} className="dash-bar-group">
+              <div className="dash-bars">
+                <div className="dash-bar dash-bar-before" style={{ height: `${(d.before / maxVal) * 100}%` }} />
+                <div className="dash-bar dash-bar-after" style={{ height: `${(d.after / maxVal) * 100}%`, animationDelay: `${i * 0.08}s` }} />
+              </div>
+              <span className="dash-bar-label">{d.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="dash-disclaimer">* Données simulées basées sur les moyennes du secteur Fintech/SaaS (Source : Hootsuite 2024)</p>
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -693,6 +778,18 @@ export default function Home() {
           <p className="section-label reveal">Démonstration live</p>
           <h2 className="section-heading reveal">Ma valeur,<br /><em>en temps réel</em>.</h2>
           <AuditPlayground />
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* DASHBOARD ANALYTICS */}
+      <section id="dashboard" className="section">
+        <div className="container">
+          <p className="section-label reveal">Impact & Data</p>
+          <h2 className="section-heading reveal">La communication,<br /><em>en chiffres</em>.</h2>
+          <p className="skills-hint reveal">Simulation des KPIs d'une campagne avec et sans stratégie éditoriale structurée.</p>
+          <DashboardAnalytics />
         </div>
       </section>
 

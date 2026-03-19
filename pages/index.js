@@ -491,6 +491,30 @@ function DashboardAnalytics() {
   )
 }
 
+// ── Infinite scroll tags ──────────────────────────────────
+const TAGS = [
+  'Copywriting Web3', 'Stratégie Social Ads', 'Vulgarisation Crypto',
+  'Content Design', 'Community Management', 'Gestion de crise',
+  'Personal Branding', 'Social Listening', 'Planning Éditorial',
+  'Brand Voice', 'Identité Visuelle', 'Growth Content',
+  'Storytelling Fintech', 'Veille Stratégique', 'UGC & Influence',
+]
+
+function InfiniteTagsBar() {
+  return (
+    <div className="tags-bar">
+      <div className="tags-track">
+        {[...TAGS, ...TAGS, ...TAGS].map((tag, i) => (
+          <span key={i} className="tags-item">
+            <span className="tags-dot" />
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -636,8 +660,8 @@ export default function Home() {
                 &ldquo;{HERO.citation}&rdquo;
               </blockquote>
               <div className="hero-cta">
-                <a href="#contact" className="btn btn-outline">Me contacter</a>
-                <a href="/cv-victor-cassina.pdf" download className="btn btn-cv">⬇ CV PDF</a>
+                <a href="#contact" className="btn btn-primary btn-green">Me contacter</a>
+                <a href="/cv-victor-cassina.pdf" download className="btn btn-cv-discreet">⬇ CV</a>
               </div>
             </div>
             <div className="hero-photo-wrap" onMouseMove={e => {
@@ -654,8 +678,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 5 raisons de scroller */}
-        <RaisonsTeaser />
+        {/* Tags infinite scroll */}
+        <InfiniteTagsBar />
       </section>
 
       <hr className="divider" />

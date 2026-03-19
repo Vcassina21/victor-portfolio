@@ -129,6 +129,7 @@ export const PROJETS = [
     tag: "Stratégie de communication · Événementiel",
     titre: "SAÉ — Journée Portes Ouvertes MMI",
     annee: "2025–2026",
+    outils: ["Canva", "CapCut", "Instagram", "Notion"],
     intro: "Concevoir et piloter intégralement la communication externe de la Journée Portes Ouvertes du département MMI de l'IUT de Dijon, en collaboration avec la cheffe de département et un groupe pilote.",
     productions: [
       "Analyse SWOT de l'édition précédente",
@@ -146,6 +147,7 @@ export const PROJETS = [
     tag: "Identité visuelle · Stratégie de com",
     titre: "SAÉ — Solidélice",
     annee: "2025",
+    outils: ["Illustrator", "Canva", "Figma", "INSEE"],
     intro: "Créer de toutes pièces l'identité visuelle et la stratégie de communication d'une association anti-gaspillage alimentaire destinée aux étudiants précaires, en s'appuyant sur une analyse macro-économique rigoureuse.",
     productions: [
       "Charte graphique complète (logo, couleurs, typographies Poppins & Tommy Soft)",
@@ -163,6 +165,7 @@ export const PROJETS = [
     tag: "Création graphique · Communication événementielle",
     titre: "SAÉ — Mission Fake News",
     annee: "2025–2026",
+    outils: ["Canva", "Photoshop", "Instagram", "X (Twitter)"],
     intro: "Concevoir l'identité visuelle et l'ensemble des supports de communication pour une journée de sensibilisation aux fake news, organisée par l'Association Information Communication (AIC) de l'IUT.",
     productions: [
       "Charte graphique AIC (logo chouette de Dijon, rouge #c01c1e, beige)",
@@ -179,6 +182,7 @@ export const PROJETS = [
     tag: "Communication institutionnelle · Analyse",
     titre: "SAÉ — Communication Institutionnelle TotalEnergies",
     annee: "2025–2026",
+    outils: ["Wayback Machine", "Notion", "Claude AI", "Canva"],
     intro: "Analyser la stratégie de communication institutionnelle de TotalEnergies face à un scandale environnemental, en mobilisant une enquête de première main via la Wayback Machine pour observer l'évolution de l'image de marque.",
     productions: [
       "Analyse du scandale environnemental d'octobre 2024",

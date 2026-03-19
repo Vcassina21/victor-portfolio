@@ -144,6 +144,14 @@ function ProjetCard({ projet }) {
       {projet.image && (
         <div className="projet-img-wrap">
           <img src={projet.image} alt={projet.titre} className="projet-img" />
+          <div className="projet-overlay">
+            <span className="projet-overlay-titre">{projet.titre}</span>
+            <div className="projet-overlay-outils">
+              {(projet.outils || []).map(o => (
+                <span key={o} className="projet-overlay-tag">{o}</span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
       <div className="projet-top" style={{ borderTop: `4px solid ${projet.couleur}` }}>
@@ -477,8 +485,12 @@ function DashboardAnalytics() {
           {CHART_DATA.map((d, i) => (
             <div key={i} className="dash-bar-group">
               <div className="dash-bars">
-                <div className="dash-bar dash-bar-before" style={{ height: `${(d.before / maxVal) * 100}%` }} />
-                <div className="dash-bar dash-bar-after" style={{ height: `${(d.after / maxVal) * 100}%`, animationDelay: `${i * 0.08}s` }} />
+                <div className="dash-bar dash-bar-before" style={{ height: `${(d.before / maxVal) * 100}%` }}>
+                  <span className="dash-bar-tip">{d.before}%</span>
+                </div>
+                <div className="dash-bar dash-bar-after" style={{ height: `${(d.after / maxVal) * 100}%`, animationDelay: `${i * 0.08}s` }}>
+                  <span className="dash-bar-tip dash-bar-tip-after">{d.after}%</span>
+                </div>
               </div>
               <span className="dash-bar-label">{d.label}</span>
             </div>

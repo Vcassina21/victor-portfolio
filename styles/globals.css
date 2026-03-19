@@ -696,3 +696,42 @@ body::before {
   opacity: .028;
 }
 [data-theme="dark"] body::before { opacity: .045; }
+
+/* ── EFFET TYPING ────────────────────────────────────────── */
+.typing-word {
+  color: var(--accent); font-weight: 500;
+  font-size: inherit;
+}
+.typing-cursor {
+  display: inline-block; color: var(--accent);
+  animation: blink .7s step-end infinite;
+  font-weight: 300; margin-left: 1px;
+}
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── PARALLAXE PHOTO ─────────────────────────────────────── */
+.hero-photo {
+  transition: transform .15s ease-out, filter .4s var(--ease),
+              box-shadow .4s var(--ease);
+}
+
+/* ── BASELINE DE POUVOIR ─────────────────────────────────── */
+.power-baseline {
+  margin-top: 28px; padding: 20px 24px;
+  border-left: none !important;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.power-baseline::before {
+  content: '❝';
+  position: absolute; top: -8px; left: 12px;
+  font-size: 4rem; color: var(--accent); opacity: .1;
+  font-family: Georgia, serif; line-height: 1;
+}
+.power-baseline {
+  font-family: var(--serif); font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--ink); line-height: 1.6;
+}

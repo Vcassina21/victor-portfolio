@@ -185,6 +185,38 @@ function ProjetCard({ projet }) {
   )
 }
 
+// ── Effet Typing ─────────────────────────────────────────
+const TYPING_WORDS = ['@Fintech', '@Web3', '@Néo-banque']
+
+function TypingWord() {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [displayed, setDisplayed] = useState('')
+  const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    const word = TYPING_WORDS[wordIndex]
+    let timeout
+
+    if (!deleting && displayed.length < word.length) {
+      timeout = setTimeout(() => setDisplayed(word.slice(0, displayed.length + 1)), 80)
+    } else if (!deleting && displayed.length === word.length) {
+      timeout = setTimeout(() => setDeleting(true), 1800)
+    } else if (deleting && displayed.length > 0) {
+      timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 45)
+    } else if (deleting && displayed.length === 0) {
+      setDeleting(false)
+      setWordIndex((wordIndex + 1) % TYPING_WORDS.length)
+    }
+    return () => clearTimeout(timeout)
+  }, [displayed, deleting, wordIndex])
+
+  return (
+    <span className="typing-word">
+      {displayed}<span className="typing-cursor">|</span>
+    </span>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -269,11 +301,11 @@ export default function Home() {
         <div className="nav-inner">
           <span className="nav-logo">Victor <span>Cassina</span></span>
           <ul className="nav-links">
-            <li><a href="#bio">Bio</a></li>
-            <li><a href="#competences">Compétences</a></li>
-            <li><a href="#projets">Projets</a></li>
-            <li><a href="#experience">Expériences</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#bio">Mon Profil</a></li>
+            <li><a href="#competences">Mes Compétences</a></li>
+            <li><a href="#projets">Mes Réalisations</a></li>
+            <li><a href="#experience">Mon Parcours</a></li>
+            <li><a href="#contact">Me Recruter</a></li>
           </ul>
           <button className="dark-toggle" onClick={() => setDark(!dark)} aria-label="Mode sombre">
             {dark ? '☀️' : '🌙'}
@@ -286,7 +318,7 @@ export default function Home() {
           <div className="nav-mobile-menu">
             {['bio','competences','projets','experience','contact'].map(id => (
               <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
-                {id === 'bio' ? 'Bio' : id === 'competences' ? 'Compétences' : id === 'projets' ? 'Projets' : id === 'experience' ? 'Expériences' : 'Contact'}
+                {id === 'bio' ? 'Mon Profil' : id === 'competences' ? 'Mes Compétences' : id === 'projets' ? 'Mes Réalisations' : id === 'experience' ? 'Mon Parcours' : 'Me Recruter'}
               </a>
             ))}
           </div>
@@ -311,8 +343,10 @@ export default function Home() {
               <h1 className="hero-name">
                 {HERO.prenom}<br /><em>{HERO.nom}</em>
               </h1>
-              <p className="hero-title">{HERO.titre}</p>
-              <blockquote className="hero-tagline">
+              <p className="hero-title">
+                Futur Community Manager &nbsp;<TypingWord />&nbsp; · Stratégie Digitale
+              </p>
+              <blockquote className="hero-tagline power-baseline">
                 &ldquo;{HERO.citation}&rdquo;
               </blockquote>
               <div className="hero-cta">
@@ -321,9 +355,17 @@ export default function Home() {
                 <a href="/cv-victor-cassina.pdf" download className="btn btn-cv">⬇ CV PDF</a>
               </div>
             </div>
-            <div className="hero-photo-wrap">
+            <div className="hero-photo-wrap" onMouseMove={e => {
+              const rect = e.currentTarget.getBoundingClientRect()
+              const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12
+              const y = ((e.clientY - rect.top) / rect.height - 0.5) * 12
+              e.currentTarget.querySelector('.hero-photo').style.transform = `scale(1.03) translate(${x}px, ${y}px)`
+            }} onMouseLeave={e => {
+              e.currentTarget.querySelector('.hero-photo').style.transform = 'scale(1) translate(0,0)'
+            }}>
               <div className="photo-glow" />
               <img src="/victor2.png" alt="Victor Cassina" className="hero-photo" />
+            </div>
             </div>
           </div>
         </div>

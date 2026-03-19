@@ -683,8 +683,6 @@ export default function Home() {
       </section>
 
       <hr className="divider" />
-
-      {/* BIO + COMPTEURS */}
       <section id="bio" className="section">
         <div className="container reveal">
           <p className="section-label">À propos</p>

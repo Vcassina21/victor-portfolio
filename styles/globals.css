@@ -162,7 +162,7 @@ section { padding: 88px 0; }
 .btn-cv-discreet:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ── HERO ───────────────────────────────────────────────── */
-.hero { padding: 140px 0 40px; position: relative; overflow: hidden; }
+.hero { padding: 140px 0 0; position: relative; overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .hero > .container { position: relative; z-index: 1; }
 
@@ -596,7 +596,7 @@ section { padding: 88px 0; }
 /* ── INFINITE TAGS BAR ───────────────────────────────────── */
 .tags-bar {
   position: relative; overflow: hidden;
-  margin: 0; padding: 12px 0;
+  margin: 40px 0 0; padding: 12px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--card-bg);

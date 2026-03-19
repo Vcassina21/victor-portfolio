@@ -217,6 +217,189 @@ function TypingWord() {
   )
 }
 
+// ── Block Explorer Timeline ───────────────────────────────
+function BlockExplorer({ experiences }) {
+  const [selected, setSelected] = useState(null)
+  const hashes = experiences.map((_, i) =>
+    '0x' + Array.from({length: 8}, () => Math.floor(Math.random()*16).toString(16)).join('')
+  )
+  return (
+    <div className="block-explorer">
+      <div className="be-header">
+        <span className="be-col">Block</span>
+        <span className="be-col">Transaction</span>
+        <span className="be-col be-hide-sm">Période</span>
+        <span className="be-col">Status</span>
+      </div>
+      {experiences.map((exp, i) => (
+        <div key={i} className="be-row reveal" onClick={() => setSelected(selected === i ? null : i)}>
+          <span className="be-num">#{String(experiences.length - i).padStart(2,'0')}</span>
+          <div className="be-main">
+            <span className="be-hash">{hashes[i]}</span>
+            <span className="be-titre">{exp.titre}</span>
+          </div>
+          <span className="be-period be-hide-sm">{exp.annee}</span>
+          <span className={`be-status ${exp.note ? 'be-pending' : 'be-done'}`}>
+            {exp.note ? '⏳ En cours' : '✓ Terminé'}
+          </span>
+          {selected === i && (
+            <div className="be-modal" onClick={e => e.stopPropagation()}>
+              <div className="be-modal-inner">
+                <button className="be-close" onClick={() => setSelected(null)}>✕</button>
+                <div className="be-modal-row"><span className="be-field">TX Hash</span><span className="be-value be-mono">{hashes[i]}</span></div>
+                <div className="be-modal-row"><span className="be-field">Block</span><span className="be-value be-mono">#{String(experiences.length - i).padStart(2,'0')}</span></div>
+                <div className="be-modal-row"><span className="be-field">Status</span><span className={`be-value ${exp.note ? 'be-pending' : 'be-done'}`}>{exp.note ? '⏳ En cours' : '✓ Confirmed'}</span></div>
+                <div className="be-modal-row"><span className="be-field">Période</span><span className="be-value">{exp.annee} {exp.note || ''}</span></div>
+                <div className="be-modal-row"><span className="be-field">Type</span><span className="be-value">{exp.tag}</span></div>
+                <div className="be-modal-row be-modal-full"><span className="be-field">Input Data</span><p className="be-value be-desc">{exp.description}</p></div>
+                {exp.highlight && <div className="be-modal-row be-modal-full"><span className="be-field">Result</span><p className="be-value be-highlight-val">{exp.highlight}</p></div>}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ── Terminal Easter Egg ───────────────────────────────────
+const TERMINAL_COMMANDS = {
+  help: () => `Commandes disponibles :\n  help     → affiche cette aide\n  whoami   → manifeste de Victor\n  hire     → envoyer une proposition\n  clear    → vider le terminal`,
+  whoami: () => `> Victor Cassina\n> Communicant · Web3 natif · Fintech enthusiast\n> "Je ne fais pas de la communication.\n>  Je construis des ponts entre des idées\n>  complexes et des humains curieux."\n> — vcassina.com`,
+  hire: () => `HIRE_REQUEST_SENT ✓\n> Redirection vers le contact...`,
+  clear: () => '__CLEAR__',
+}
+
+function Terminal({ onHire }) {
+  const [open, setOpen] = useState(false)
+  const [lines, setLines] = useState(['Bienvenue. Tape "help" pour commencer.'])
+  const [input, setInput] = useState('')
+  const endRef = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); setOpen(o => !o) }
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
+
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [lines])
+
+  const run = (cmd) => {
+    const trimmed = cmd.trim().toLowerCase()
+    const fn = TERMINAL_COMMANDS[trimmed]
+    if (!fn) {
+      setLines(l => [...l, `$ ${cmd}`, `Commande inconnue: "${trimmed}". Tape "help".`])
+    } else {
+      const result = fn()
+      if (result === '__CLEAR__') { setLines(['Terminal vidé.']); return }
+      if (trimmed === 'hire') {
+        setLines(l => [...l, `$ ${cmd}`, result])
+        setTimeout(() => { setOpen(false); onHire() }, 1200)
+      } else {
+        setLines(l => [...l, `$ ${cmd}`, result])
+      }
+    }
+  }
+
+  if (!open) return (
+    <button className="terminal-btn" onClick={() => setOpen(true)} title="Ouvrir le terminal (Ctrl+K)">
+      &gt;_
+    </button>
+  )
+
+  return (
+    <div className="terminal-overlay" onClick={() => setOpen(false)}>
+      <div className="terminal-box" onClick={e => e.stopPropagation()}>
+        <div className="terminal-bar">
+          <span className="t-dot t-red" /><span className="t-dot t-yellow" /><span className="t-dot t-green" />
+          <span className="terminal-title">vcassina ~ terminal</span>
+          <button className="terminal-close" onClick={() => setOpen(false)}>✕</button>
+        </div>
+        <div className="terminal-body">
+          {lines.map((l, i) => <pre key={i} className="terminal-line">{l}</pre>)}
+          <div ref={endRef} />
+        </div>
+        <div className="terminal-input-row">
+          <span className="terminal-prompt">~$</span>
+          <input
+            className="terminal-input" autoFocus value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter' && input.trim()) { run(input); setInput('') } }}
+            placeholder="tape une commande..."
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Audit Playground ──────────────────────────────────────
+const AUDIT_SAMPLES = {
+  Clarté: {
+    input: "La tokenisation des actifs sous-jacents via des protocoles de smart contracts décentralisés permet une liquidité accrue des marchés de capitaux traditionnellement illiquides.",
+    output: "Grâce à la blockchain, on peut maintenant acheter et vendre des parts de biens immobiliers ou d'œuvres d'art aussi facilement qu'une action en bourse."
+  },
+  Punchy: {
+    input: "Notre solution de néo-banque propose une offre de services financiers innovants destinée aux populations non bancarisées dans les marchés émergents.",
+    output: "On donne accès à la banque à ceux que les banques ont oubliés. Pas de paperasse. Pas de minimum. Juste un téléphone. 🌍"
+  },
+  Web3: {
+    input: "Notre application mobile permet d'effectuer des virements internationaux avec des frais réduits par rapport aux systèmes bancaires traditionnels.",
+    output: "Send money cross-chain, no middlemen, no legacy fees. Pure P2P. Your keys, your money. NGMI avec les banques traditionnelles. 🚀"
+  }
+}
+
+function AuditPlayground() {
+  const [mode, setMode] = useState(null)
+  const [scanning, setScanning] = useState(false)
+  const [result, setResult] = useState(null)
+
+  const runAudit = (m) => {
+    setMode(m); setResult(null); setScanning(true)
+    setTimeout(() => { setScanning(false); setResult(AUDIT_SAMPLES[m]) }, 1800)
+  }
+
+  return (
+    <div className="audit-wrap reveal">
+      <div className="audit-intro">
+        <p className="audit-tagline">Test en direct · Vulgarisation</p>
+        <h3 className="audit-title">Transformez n&apos;importe quel texte technique</h3>
+        <p className="audit-sub">Sélectionnez un mode pour voir comment j&apos;adapte un message à son audience.</p>
+      </div>
+      <div className="audit-modes">
+        {Object.keys(AUDIT_SAMPLES).map(m => (
+          <button key={m} className={`audit-mode-btn${mode === m ? ' active' : ''}`} onClick={() => runAudit(m)}>
+            {m === 'Clarté' ? '🔍 Clarté' : m === 'Punchy' ? '⚡ Punchy' : '🔗 Web3'}
+          </button>
+        ))}
+      </div>
+      {mode && (
+        <div className="audit-panels">
+          <div className="audit-panel audit-before">
+            <span className="audit-panel-label">Avant — Jargon</span>
+            <p className="audit-text">{AUDIT_SAMPLES[mode].input}</p>
+          </div>
+          <div className="audit-arrow">→</div>
+          <div className="audit-panel audit-after">
+            <span className="audit-panel-label">Après — {mode}</span>
+            {scanning ? (
+              <div className="audit-scanning">
+                <span className="audit-scan-dot" /><span className="audit-scan-dot" /><span className="audit-scan-dot" />
+                <span className="audit-scan-text">Analyse en cours...</span>
+              </div>
+            ) : result ? (
+              <p className="audit-text audit-result">{result.output}</p>
+            ) : null}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -272,6 +455,10 @@ export default function Home() {
     setTimeout(() => setToast(false), 2500)
   }, [])
 
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <>
       <Head>
@@ -280,6 +467,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      {/* TERMINAL */}
+      <Terminal onHire={scrollToContact} />
 
       {/* BARRE DE PROGRESSION */}
       <div className="read-progress" style={{ width: `${progress}%` }} />
@@ -479,31 +669,24 @@ export default function Home() {
 
       <hr className="divider" />
 
-      {/* EXPÉRIENCES — TIMELINE */}
+      {/* EXPÉRIENCES — BLOCK EXPLORER */}
       <section id="experience" className="section">
         <div className="container">
           <p className="section-label reveal">Parcours</p>
           <h2 className="section-heading reveal">Expériences <em>clés</em>.</h2>
-          <div className="timeline">
-            {EXPERIENCES.map((exp, i) => (
-              <div key={i} className="timeline-item reveal">
-                <div className="timeline-left">
-                  <span className="timeline-annee">{exp.annee}</span>
-                  {exp.note && <small className="timeline-note">{exp.note}</small>}
-                </div>
-                <div className="timeline-dot-col">
-                  <div className="timeline-dot" />
-                  {i < EXPERIENCES.length - 1 && <div className="timeline-line" />}
-                </div>
-                <div className="timeline-content">
-                  <span className="exp-tag">{exp.tag}</span>
-                  <h3 className="timeline-titre">{exp.titre}</h3>
-                  <p className="timeline-desc">{exp.description}</p>
-                  {exp.highlight && <p className="exp-highlight">{exp.highlight}</p>}
-                </div>
-              </div>
-            ))}
-          </div>
+          <p className="skills-hint reveal">Cliquez sur un bloc pour voir le détail de la transaction.</p>
+          <BlockExplorer experiences={EXPERIENCES} />
+        </div>
+      </section>
+
+      <hr className="divider" />
+
+      {/* AUDIT PLAYGROUND */}
+      <section id="audit" className="section">
+        <div className="container">
+          <p className="section-label reveal">Démonstration live</p>
+          <h2 className="section-heading reveal">Ma valeur,<br /><em>en temps réel</em>.</h2>
+          <AuditPlayground />
         </div>
       </section>
 

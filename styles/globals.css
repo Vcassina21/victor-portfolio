@@ -433,69 +433,97 @@ section { padding: 88px 0; }
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media (max-width: 680px) {
 
-  /* NAV — menu hamburger simplifié */
+  /* NAV */
   .nav-inner { height: 56px; padding: 0 16px; }
   .nav-links { display: none; }
   .dark-toggle { padding: 4px 8px; font-size: .75rem; }
   .nav-logo { font-size: 1rem; }
 
   /* HERO */
-  .hero { padding: 88px 0 56px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+  .hero { padding: 80px 0 48px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-photo-wrap { order: -1; }
-  .hero-photo { width: 130px; height: 165px; }
-  .hero-name { font-size: 3rem; }
-  .hero-cta { flex-direction: column; }
+  .hero-photo { width: 120px; height: 150px; }
+  .hero-name { font-size: 2.6rem; }
+  .hero-title { font-size: .88rem; min-height: 4em; }
+  .hero-tagline { font-size: .95rem; padding: 14px 16px; }
+  .hero-tagline::before { font-size: 2.5rem; }
+  .hero-available { font-size: .7rem; padding: 5px 12px; }
+  .hero-eyebrow { font-size: .68rem; }
+  .hero-cta { flex-direction: column; gap: 8px; }
   .hero-cta .btn { width: 100%; justify-content: center; }
 
   /* RAISONS TEASER */
-  .raisons-inner { flex-direction: column; gap: 10px; padding: 16px; }
+  .raisons-teaser { margin: 32px auto 0; }
+  .raisons-inner { flex-direction: column; gap: 10px; padding: 14px; }
   .raisons-track { min-width: 0; width: 100%; height: 36px; }
   .raison-item { justify-content: center; }
-  .raison-num { font-size: 1.1rem; }
-  .raison-title { font-size: .85rem; }
-  .raisons-label { font-size: .62rem; text-align: center; }
-  .raisons-scroll { font-size: .62rem; }
+  .raison-num { font-size: 1rem; }
+  .raison-title { font-size: .82rem; }
+  .raisons-label { font-size: .6rem; text-align: center; }
+  .raisons-scroll { font-size: .6rem; }
   .raisons-dots { justify-content: center; }
 
   /* COMPTEURS */
   .counters { flex-direction: column; }
-  .counter-item { border-right: none; border-bottom: 1px solid var(--border); padding: 20px 16px; }
+  .counter-item { border-right: none; border-bottom: 1px solid var(--border); padding: 18px 16px; }
   .counter-item:last-child { border-bottom: none; }
-  .counter-number { font-size: 2rem; }
+  .counter-number { font-size: 1.8rem; }
+  .counter-label { font-size: .68rem; }
+  .counter-sub { font-size: .6rem; }
 
   /* SECTIONS */
-  .section { padding: 56px 0; }
-  .section-heading { font-size: 1.8rem; }
+  .section { padding: 48px 0; }
+  .section-heading { font-size: 1.7rem; }
+  .section-label { font-size: .65rem; }
   .container { padding: 0 16px; }
+  .skills-hint { font-size: .82rem; }
 
   /* SOFT SKILLS */
   .softskills-grid { grid-template-columns: 1fr; }
   .lang-block { border-right: none; border-bottom: 1px solid var(--border); }
+  .soft-label { font-size: .85rem; }
+  .soft-desc { font-size: .78rem; }
+  .outils-list { gap: 6px; }
+  .outil-pill { font-size: .72rem; padding: 5px 10px; }
 
   /* COMPÉTENCES */
   .skills-grid { grid-template-columns: 1fr; }
-  .skill-header { padding: 20px 18px 16px; }
-  .skill-body { padding: 0 18px; }
+  .skill-header { padding: 18px 16px 14px; }
+  .skill-body { padding: 0 16px; }
+  .skill-header h3 { font-size: 1rem; }
+  .skill-detail { font-size: .78rem; }
+  .iut-pill { font-size: .7rem; padding: 3px 10px; }
 
   /* TIMELINE */
-  .timeline-item { grid-template-columns: 80px 20px 1fr; gap: 0 8px; }
-  .timeline-annee { font-size: .75rem; }
-  .timeline-titre { font-size: 1rem; }
+  .timeline-item { grid-template-columns: 72px 18px 1fr; gap: 0 8px; }
+  .timeline-annee { font-size: .72rem; }
+  .timeline-titre { font-size: .95rem; }
+  .timeline-desc { font-size: .82rem; }
+  .exp-tag { font-size: .62rem; }
 
   /* PROJETS */
   .projets-grid { grid-template-columns: 1fr; }
+  .projet-titre { font-size: 1.05rem; }
+  .projet-resume { font-size: .82rem; }
+  .projet-toggle { font-size: .72rem; padding: 5px 12px; }
+  .projet-img-wrap { height: 160px; }
 
   /* CITATION */
-  .citation-band { padding: 44px 0; }
-  .citation-text { font-size: 1rem; padding: 0 8px; }
+  .citation-band { padding: 40px 0; }
+  .citation-text { font-size: .95rem; padding: 0 8px; }
+  .citation-author { font-size: .7rem; }
 
   /* CONTACT */
+  .contact-section { padding: 56px 0 72px; }
   .contact-links { flex-direction: column; align-items: center; }
   .contact-links .btn { width: 100%; max-width: 320px; justify-content: center; }
 
   /* RETOUR EN HAUT */
-  .back-to-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 1rem; }
+  .back-to-top { bottom: 16px; right: 16px; width: 36px; height: 36px; font-size: .9rem; }
+
+  /* TOAST */
+  .toast { font-size: .78rem; padding: 10px 18px; width: 90%; text-align: center; }
 }
 
 /* NAV MOBILE — burger menu */

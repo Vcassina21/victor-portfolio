@@ -673,7 +673,7 @@ export default function Home() {
               e.currentTarget.querySelector('.hero-photo').style.transform = 'scale(1) translate(0,0)'
             }}>
               <div className="photo-glow" />
-              <img src="/victor2.png" alt="Victor Cassina" className="hero-photo" />
+              <img src="/victor.png" alt="Victor Cassina" className="hero-photo" />
             </div>
           </div>
         </div>

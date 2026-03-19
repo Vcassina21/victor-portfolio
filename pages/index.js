@@ -227,18 +227,21 @@ function BlockExplorer({ experiences }) {
   return (
     <div className="block-explorer">
       <div className="be-header">
-        <span className="be-col">Block</span>
-        <span className="be-col">Transaction</span>
-        <span className="be-col be-hide-sm">Période</span>
-        <span className="be-col">Status</span>
+        <span>Block</span>
+        <span>Transaction</span>
+        <span className="be-hide-sm">Période</span>
+        <span>Status</span>
       </div>
       {experiences.map((exp, i) => (
-        <div key={i}>
-          <div className={`be-row reveal${selected === i ? ' be-row-open' : ''}`} onClick={() => setSelected(selected === i ? null : i)}>
+        <div key={i} className="be-entry">
+          <div
+            className={`be-row${selected === i ? ' be-row-open' : ''}`}
+            onClick={() => setSelected(selected === i ? null : i)}
+          >
             <span className="be-num">#{String(experiences.length - i).padStart(2,'0')}</span>
             <div className="be-main">
               <span className="be-hash">{hashes[i]}</span>
-              <span className="be-titre">{exp.titre}</span>
+              <span className="be-titre">{exp.titre} <span className="be-arrow">{selected === i ? '▲' : '▼'}</span></span>
             </div>
             <span className="be-period be-hide-sm">{exp.annee}</span>
             <span className={`be-status ${exp.note ? 'be-pending' : 'be-done'}`}>
@@ -247,15 +250,15 @@ function BlockExplorer({ experiences }) {
           </div>
           {selected === i && (
             <div className="be-modal">
+              <button className="be-close" onClick={(e) => { e.stopPropagation(); setSelected(null) }}>✕ Fermer</button>
               <div className="be-modal-inner">
-                <button className="be-close" onClick={() => setSelected(null)}>✕ Fermer</button>
                 <div className="be-modal-row"><span className="be-field">TX Hash</span><span className="be-value be-mono">{hashes[i]}</span></div>
-                <div className="be-modal-row"><span className="be-field">Block</span><span className="be-value be-mono">#{String(experiences.length - i).padStart(2,'0')}</span></div>
+                <div className="be-modal-row"><span className="be-field">Poste</span><span className="be-value">{exp.titre}</span></div>
                 <div className="be-modal-row"><span className="be-field">Status</span><span className={`be-value ${exp.note ? 'be-pending' : 'be-done'}`}>{exp.note ? '⏳ En cours' : '✓ Confirmed'}</span></div>
                 <div className="be-modal-row"><span className="be-field">Période</span><span className="be-value">{exp.annee} {exp.note || ''}</span></div>
                 <div className="be-modal-row"><span className="be-field">Type</span><span className="be-value">{exp.tag}</span></div>
-                <div className="be-modal-row"><span className="be-field">Input Data</span><p className="be-value be-desc">{exp.description}</p></div>
-                {exp.highlight && <div className="be-modal-row"><span className="be-field">Result</span><p className="be-value be-highlight-val">{exp.highlight}</p></div>}
+                <div className="be-modal-row"><span className="be-field">Description</span><p className="be-value be-desc">{exp.description}</p></div>
+                {exp.highlight && <div className="be-modal-row"><span className="be-field">Résultat</span><p className="be-value be-highlight-val">{exp.highlight}</p></div>}
               </div>
             </div>
           )}

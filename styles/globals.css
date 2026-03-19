@@ -249,7 +249,7 @@ section { padding: 88px 0; }
 /* ── LANGUES & SOFT SKILLS ──────────────────────────────── */
 .softskills-grid {
   display: grid; grid-template-columns: 1fr 2fr; gap: 0; margin-top: 8px;
-  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: visible;
 }
 .softskills-sub { font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-bottom: 24px; }
 .lang-block { padding: 32px; border-right: 1px solid var(--border); background: var(--card-bg); }
@@ -673,7 +673,7 @@ section { padding: 88px 0; }
   background: var(--ink); color: var(--bg);
   font-size: .75rem; line-height: 1.5;
   padding: 10px 14px; border-radius: 10px;
-  width: 220px; z-index: 200;
+  width: 220px; z-index: 500;
   opacity: 0; pointer-events: none;
   transition: opacity .2s, transform .2s;
   box-shadow: 0 8px 24px rgba(0,0,0,.2);

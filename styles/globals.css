@@ -235,7 +235,7 @@ section { padding: 88px 0; }
 /* ── COMPTEURS ──────────────────────────────────────────── */
 .counters {
   display: flex; flex-wrap: wrap; margin-top: 48px;
-  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: visible;
 }
 .counter-item {
   flex: 1; min-width: 120px; padding: 28px 20px; text-align: center;
@@ -804,12 +804,14 @@ body::before {
 
 /* Modal */
 .be-modal {
-  position: absolute; left: 0; right: 0; top: 100%;
-  z-index: 50; padding: 0 20px 20px;
-  background: var(--bg); border-bottom: 1px solid var(--border);
+  position: relative; left: 0; right: 0; top: 0;
+  z-index: 50; padding: 20px;
+  background: var(--card-bg);
+  border-bottom: 2px solid var(--accent);
   border-top: 2px solid var(--accent);
   grid-column: 1 / -1;
   animation: fadeUp .2s var(--ease);
+  margin: 0;
 }
 .be-modal-inner { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; }
 .be-close {

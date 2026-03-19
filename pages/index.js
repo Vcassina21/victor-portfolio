@@ -85,7 +85,7 @@ const RAISONS = [
   { num: '02', label: 'Gestion de communauté' },
   { num: '03', label: 'Expérience terrain réelle' },
   { num: '04', label: 'Maîtrise des réseaux sociaux' },
-  { num: '05', label: 'Disponible dès avril 2026' },
+  { num: '05', label: 'Veille & intelligence stratégique' },
 ]
 
 function RaisonsTeaser() {
@@ -220,9 +220,10 @@ function TypingWord() {
 // ── Block Explorer Timeline ───────────────────────────────
 function BlockExplorer({ experiences }) {
   const [selected, setSelected] = useState(null)
-  const hashes = experiences.map((_, i) =>
-    '0x' + Array.from({length: 8}, () => Math.floor(Math.random()*16).toString(16)).join('')
-  )
+  const hashes = useRef(
+    experiences.map(() => '0x' + Array.from({length: 8}, () => Math.floor(Math.random()*16).toString(16)).join(''))
+  ).current
+
   return (
     <div className="block-explorer">
       <div className="be-header">
@@ -232,27 +233,29 @@ function BlockExplorer({ experiences }) {
         <span className="be-col">Status</span>
       </div>
       {experiences.map((exp, i) => (
-        <div key={i} className="be-row reveal" onClick={() => setSelected(selected === i ? null : i)}>
-          <span className="be-num">#{String(experiences.length - i).padStart(2,'0')}</span>
-          <div className="be-main">
-            <span className="be-hash">{hashes[i]}</span>
-            <span className="be-titre">{exp.titre}</span>
+        <div key={i}>
+          <div className={`be-row reveal${selected === i ? ' be-row-open' : ''}`} onClick={() => setSelected(selected === i ? null : i)}>
+            <span className="be-num">#{String(experiences.length - i).padStart(2,'0')}</span>
+            <div className="be-main">
+              <span className="be-hash">{hashes[i]}</span>
+              <span className="be-titre">{exp.titre}</span>
+            </div>
+            <span className="be-period be-hide-sm">{exp.annee}</span>
+            <span className={`be-status ${exp.note ? 'be-pending' : 'be-done'}`}>
+              {exp.note ? '⏳ En cours' : '✓ Terminé'}
+            </span>
           </div>
-          <span className="be-period be-hide-sm">{exp.annee}</span>
-          <span className={`be-status ${exp.note ? 'be-pending' : 'be-done'}`}>
-            {exp.note ? '⏳ En cours' : '✓ Terminé'}
-          </span>
           {selected === i && (
-            <div className="be-modal" onClick={e => e.stopPropagation()}>
+            <div className="be-modal">
               <div className="be-modal-inner">
-                <button className="be-close" onClick={() => setSelected(null)}>✕</button>
+                <button className="be-close" onClick={() => setSelected(null)}>✕ Fermer</button>
                 <div className="be-modal-row"><span className="be-field">TX Hash</span><span className="be-value be-mono">{hashes[i]}</span></div>
                 <div className="be-modal-row"><span className="be-field">Block</span><span className="be-value be-mono">#{String(experiences.length - i).padStart(2,'0')}</span></div>
                 <div className="be-modal-row"><span className="be-field">Status</span><span className={`be-value ${exp.note ? 'be-pending' : 'be-done'}`}>{exp.note ? '⏳ En cours' : '✓ Confirmed'}</span></div>
                 <div className="be-modal-row"><span className="be-field">Période</span><span className="be-value">{exp.annee} {exp.note || ''}</span></div>
                 <div className="be-modal-row"><span className="be-field">Type</span><span className="be-value">{exp.tag}</span></div>
-                <div className="be-modal-row be-modal-full"><span className="be-field">Input Data</span><p className="be-value be-desc">{exp.description}</p></div>
-                {exp.highlight && <div className="be-modal-row be-modal-full"><span className="be-field">Result</span><p className="be-value be-highlight-val">{exp.highlight}</p></div>}
+                <div className="be-modal-row"><span className="be-field">Input Data</span><p className="be-value be-desc">{exp.description}</p></div>
+                {exp.highlight && <div className="be-modal-row"><span className="be-field">Result</span><p className="be-value be-highlight-val">{exp.highlight}</p></div>}
               </div>
             </div>
           )}
@@ -346,9 +349,9 @@ const AUDIT_SAMPLES = {
     input: "Notre solution de néo-banque propose une offre de services financiers innovants destinée aux populations non bancarisées dans les marchés émergents.",
     output: "On donne accès à la banque à ceux que les banques ont oubliés. Pas de paperasse. Pas de minimum. Juste un téléphone. 🌍"
   },
-  Web3: {
+  'Gen Z': {
     input: "Notre application mobile permet d'effectuer des virements internationaux avec des frais réduits par rapport aux systèmes bancaires traditionnels.",
-    output: "Send money cross-chain, no middlemen, no legacy fees. Pure P2P. Your keys, your money. NGMI avec les banques traditionnelles. 🚀"
+    output: "POV : t'envoies de l'argent à l'autre bout du monde et ça coûte moins cher qu'un café ☕ Fini les frais cachés, fini les délais. Ta banque elle fait ça ? 👀 #Fintech #GenZ #MoneyTips"
   }
 }
 
@@ -372,7 +375,7 @@ function AuditPlayground() {
       <div className="audit-modes">
         {Object.keys(AUDIT_SAMPLES).map(m => (
           <button key={m} className={`audit-mode-btn${mode === m ? ' active' : ''}`} onClick={() => runAudit(m)}>
-            {m === 'Clarté' ? '🔍 Clarté' : m === 'Punchy' ? '⚡ Punchy' : '🔗 Web3'}
+            {m === 'Clarté' ? '🔍 Clarté' : m === 'Punchy' ? '⚡ Punchy' : '📱 Gen Z'}
           </button>
         ))}
       </div>

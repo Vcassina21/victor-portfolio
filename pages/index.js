@@ -366,7 +366,6 @@ export default function Home() {
               <div className="photo-glow" />
               <img src="/victor2.png" alt="Victor Cassina" className="hero-photo" />
             </div>
-            </div>
           </div>
         </div>
 

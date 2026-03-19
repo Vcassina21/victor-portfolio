@@ -636,7 +636,6 @@ export default function Home() {
                 &ldquo;{HERO.citation}&rdquo;
               </blockquote>
               <div className="hero-cta">
-                <a href="#competences" className="btn btn-primary">Voir mes compétences</a>
                 <a href="#contact" className="btn btn-outline">Me contacter</a>
                 <a href="/cv-victor-cassina.pdf" download className="btn btn-cv">⬇ CV PDF</a>
               </div>

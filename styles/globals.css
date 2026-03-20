@@ -1315,8 +1315,8 @@ body::before {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+  align-items: start;
 }
-.projets-grid .projet-card:nth-child(2) { grid-row: 1 / 3; }
 
 
 

@@ -820,29 +820,6 @@ export default function Home() {
 
       <hr className="divider" />
 
-      {/* AUDIT PLAYGROUND */}
-      <section id="audit" className="section">
-        <div className="container">
-          <p className="section-label reveal">Démonstration live</p>
-          <h2 className="section-heading reveal">Ma valeur,<br /><em>en temps réel</em>.</h2>
-          <AuditPlayground />
-        </div>
-      </section>
-
-      <hr className="divider" />
-
-      {/* DASHBOARD ANALYTICS */}
-      <section id="dashboard" className="section">
-        <div className="container">
-          <p className="section-label reveal">Impact & Data</p>
-          <h2 className="section-heading reveal">La communication,<br /><em>en chiffres</em>.</h2>
-          <p className="skills-hint reveal">Simulation des KPIs d'une campagne avec et sans stratégie éditoriale structurée.</p>
-          <DashboardAnalytics />
-        </div>
-      </section>
-
-      <hr className="divider" />
-
       {/* PROJETS */}
       <section id="projets" className="section">
         <div className="container">

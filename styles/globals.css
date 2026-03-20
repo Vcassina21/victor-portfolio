@@ -188,7 +188,7 @@ section { padding: 88px 0; }
 }
 .available-dot {
   width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-  animation: pulse 1.8s ease-in-out infinite;
+  animation: pulse 1.8s ease-in-out 3;
 }
 @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.7); } }
 

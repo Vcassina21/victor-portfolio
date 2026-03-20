@@ -543,22 +543,6 @@ export default function Home() {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
   }, [dark])
 
-  // Curseur personnalisé
-  useEffect(() => {
-    const cursor = document.createElement('div')
-    cursor.className = 'custom-cursor'
-    document.body.appendChild(cursor)
-    const move = (e) => { cursor.style.transform = `translate(${e.clientX - 8}px, ${e.clientY - 8}px)` }
-    const grow = () => cursor.classList.add('cursor-grow')
-    const shrink = () => cursor.classList.remove('cursor-grow')
-    window.addEventListener('mousemove', move)
-    document.querySelectorAll('a, button, .skill-card, .projet-card, .btn').forEach(el => {
-      el.addEventListener('mouseenter', grow)
-      el.addEventListener('mouseleave', shrink)
-    })
-    return () => { window.removeEventListener('mousemove', move); cursor.remove() }
-  }, [])
-
   // Barre de progression lecture
   const [progress, setProgress] = useState(0)
   useEffect(() => {

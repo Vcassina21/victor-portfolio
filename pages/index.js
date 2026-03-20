@@ -50,8 +50,31 @@ function Counter({ target }) {
 // ── Carte compétence accordéon ────────────────────────────────
 function SkillCard({ competence }) {
   const [open, setOpen] = useState(false)
+  const cardRef = useRef(null)
+
+  const handleMouseMove = (e) => {
+    if (open) return
+    const card = cardRef.current
+    const rect = card.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -16
+    card.style.transform = `perspective(800px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1.02,1.02,1.02)`
+    card.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`)
+    card.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`)
+  }
+  const handleMouseLeave = () => {
+    if (cardRef.current) cardRef.current.style.transform = ''
+  }
+
   return (
-    <div className={`skill-card${open ? ' open' : ''}`} onClick={() => setOpen(!open)}>
+    <div
+      ref={cardRef}
+      className={`skill-card${open ? ' open' : ''}`}
+      onClick={() => setOpen(!open)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="skill-shine" />
       <div className="skill-header">
         <div className="skill-header-left">
           <span className="skill-badge">{competence.badge}</span>
@@ -137,21 +160,49 @@ function RaisonsTeaser() {
 }
 
 // ── Carte projet accordéon ────────────────────────────────
+function useDecrypt(text, active) {
+  const [display, setDisplay] = useState(text)
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%'
+  useEffect(() => {
+    if (!active) { setDisplay(text); return }
+    let iteration = 0
+    const interval = setInterval(() => {
+      setDisplay(text.split('').map((c, i) => {
+        if (i < iteration) return text[i]
+        if (c === ' ') return ' '
+        return chars[Math.floor(Math.random() * chars.length)]
+      }).join(''))
+      iteration += 1
+      if (iteration > text.length) clearInterval(interval)
+    }, 30)
+    return () => clearInterval(interval)
+  }, [active, text])
+  return display
+}
+
 function ProjetCard({ projet }) {
   const [open, setOpen] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const decryptedTitre = useDecrypt(projet.titre, hovered)
+
   return (
     <div className="projet-card reveal">
       {projet.image && (
-        <div className="projet-img-wrap">
-          <img src={projet.image} alt={projet.titre} className="projet-img" />
-          <div className="projet-overlay">
-            <span className="projet-overlay-titre">{projet.titre}</span>
+        <div
+          className="projet-img-wrap"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <img src={projet.image} alt={projet.titre} className={`projet-img${hovered ? ' projet-img-bw' : ''}`} />
+          <div className={`projet-overlay${hovered ? ' projet-overlay-active' : ''}`}>
+            <span className="projet-overlay-titre">{decryptedTitre}</span>
             <div className="projet-overlay-outils">
               {(projet.outils || []).map(o => (
                 <span key={o} className="projet-overlay-tag">{o}</span>
               ))}
             </div>
           </div>
+          {hovered && <div className="projet-neon-border" style={{ borderColor: projet.couleur, boxShadow: `0 0 20px ${projet.couleur}60` }} />}
         </div>
       )}
       <div className="projet-top" style={{ borderTop: `4px solid ${projet.couleur}` }}>
@@ -586,6 +637,11 @@ export default function Home() {
 
       {/* TERMINAL */}
       <Terminal onHire={scrollToContact} />
+
+      {/* GLOWS FOND */}
+      <div className="site-glow site-glow-1" />
+      <div className="site-glow site-glow-2" />
+      <div className="site-glow site-glow-3" />
 
       {/* BARRE DE PROGRESSION */}
       <div className="read-progress" style={{ width: `${progress}%` }} />

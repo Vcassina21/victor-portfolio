@@ -687,8 +687,11 @@ export default function Home() {
   }, [])
 
   // Mode sombre
-  const [dark, setDark] = useState(false)
+  const [dark, setDark] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  }, [])
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
   }, [dark])
@@ -771,7 +774,7 @@ export default function Home() {
             <li><a href="#experience">Mon Parcours</a></li>
             <li><a href="#contact">Me Recruter</a></li>
           </ul>
-          <button className="dark-toggle" onClick={() => setDark(!dark)} aria-label="Mode sombre">
+          <button className="dark-toggle" onClick={() => setDark(!dark)} aria-label="Changer le thème" title={dark ? 'Passer en mode clair' : 'Passer en mode sombre'}>
             {dark ? '☀️' : '🌙'}
           </button>
           <button className="nav-burger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">

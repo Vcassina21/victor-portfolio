@@ -1,6 +1,11 @@
 import '../styles/globals.css'
 import { useState, useEffect } from 'react'
 
+// Applique le dark mode immédiatement pour éviter le flash blanc
+if (typeof document !== 'undefined') {
+  document.documentElement.setAttribute('data-theme', 'dark')
+}
+
 const LINES = [
   { text: '> Initializing portfolio...', delay: 0, result: '[OK]' },
   { text: '> Connecting to Fintech network...', delay: 400, result: '[OK]' },

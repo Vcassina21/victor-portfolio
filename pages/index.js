@@ -581,20 +581,98 @@ function InfiniteTagsBar() {
 // ── Compteur visiteurs ────────────────────────────────────
 function VisitorCounter() {
   const [count, setCount] = useState(null)
+  const [showEgg, setShowEgg] = useState(false)
 
   useEffect(() => {
     fetch('/api/visitors', { method: 'POST' })
       .then(r => r.json())
-      .then(d => setCount(d.count))
+      .then(d => {
+        setCount(d.count)
+        if (d.count && d.count % 50 === 0) {
+          setShowEgg(true)
+          setTimeout(() => setShowEgg(false), 5000)
+        }
+      })
       .catch(() => {})
   }, [])
 
-  if (!count) return null
+  return (
+    <>
+      {showEgg && <EasterEgg count={count} />}
+      {count && (
+        <div className="visitor-counter">
+          <span className="visitor-dot" />
+          Vous êtes le <strong>{count.toLocaleString('fr')}</strong> visiteur{count > 1 ? 's' : ''}
+        </div>
+      )}
+    </>
+  )
+}
+
+function EasterEgg({ count }) {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    const particles = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: -20,
+      vx: (Math.random() - 0.5) * 4,
+      vy: Math.random() * 4 + 2,
+      size: Math.random() * 10 + 4,
+      color: ['#00D084', '#00FF9D', '#ffffff', '#00a8ff', '#FFD700'][Math.floor(Math.random() * 5)],
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 6,
+      shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      opacity: 1,
+    }))
+
+    let frame = 0
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      frame++
+      particles.forEach(p => {
+        p.x += p.vx
+        p.y += p.vy
+        p.rotation += p.rotSpeed
+        p.vy += 0.05
+        if (frame > 120) p.opacity = Math.max(0, p.opacity - 0.015)
+
+        ctx.save()
+        ctx.globalAlpha = p.opacity
+        ctx.translate(p.x, p.y)
+        ctx.rotate((p.rotation * Math.PI) / 180)
+        ctx.fillStyle = p.color
+        if (p.shape === 'rect') {
+          ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2)
+        } else {
+          ctx.beginPath()
+          ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2)
+          ctx.fill()
+        }
+        ctx.restore()
+      })
+      if (frame < 300) requestAnimationFrame(animate)
+      else ctx.clearRect(0, 0, canvas.width, canvas.height)
+    }
+    animate()
+  }, [])
 
   return (
-    <div className="visitor-counter">
-      <span className="visitor-dot" />
-      {count.toLocaleString('fr')} visiteur{count > 1 ? 's' : ''}
+    <div className="easter-egg-wrap">
+      <canvas ref={canvasRef} className="easter-canvas" />
+      <div className="easter-message">
+        <span className="easter-emoji">🎉</span>
+        <div className="easter-text">
+          <span className="easter-num">{count.toLocaleString('fr')}</span>
+          <span className="easter-label">visiteurs !</span>
+        </div>
+        <span className="easter-sub">Merci pour votre visite ✦</span>
+      </div>
     </div>
   )
 }

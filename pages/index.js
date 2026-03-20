@@ -578,6 +578,27 @@ function InfiniteTagsBar() {
   )
 }
 
+// ── Compteur visiteurs ────────────────────────────────────
+function VisitorCounter() {
+  const [count, setCount] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/visitors', { method: 'POST' })
+      .then(r => r.json())
+      .then(d => setCount(d.count))
+      .catch(() => {})
+  }, [])
+
+  if (!count) return null
+
+  return (
+    <div className="visitor-counter">
+      <span className="visitor-dot" />
+      {count.toLocaleString('fr')} visiteur{count > 1 ? 's' : ''}
+    </div>
+  )
+}
+
 // ── Page principale ───────────────────────────────────────────
 export default function Home() {
   useReveal()
@@ -637,6 +658,9 @@ export default function Home() {
 
       {/* TERMINAL */}
       <Terminal onHire={scrollToContact} />
+
+      {/* COMPTEUR VISITEURS */}
+      <VisitorCounter />
 
       {/* GLOWS FOND */}
       <div className="site-glow site-glow-1" />
